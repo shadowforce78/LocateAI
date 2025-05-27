@@ -1,13 +1,15 @@
+import json
 import os
 
-dir = "N:\\Download\\parcoursup"
 
-try:
-    with os.scandir(dir) as dir:
-        for i in dir:
-            if i.is_dir():
-                with os.scandir(i) as dir2:
-                    for j in dir2:
-                        print(j.name)
-except PermissionError:
-    print('Pas de permissions')
+def get_tree(dir, folder):
+    for path, dirnames, filenames in os.walk(dir):
+        folder.append((path, dirnames, filenames))
+
+    return folder
+
+dirtest = "O:\\"
+folder = []
+
+with open('./O.txt', "w") as f:
+    f.write(json.dumps(get_tree(dirtest, folder)))
